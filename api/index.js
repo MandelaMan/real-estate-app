@@ -4,5 +4,3 @@ const app = express();
 app.listen(3000, () => {
   console.log("Server is up and running " + 3000);
 });
-
-console.log("umefika");
