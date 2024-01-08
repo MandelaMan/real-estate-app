@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 
-const Signin = () => {
+const SignUp = () => {
   return (
     <div className="p-3 max-w-md mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">
-        Sign In
+        Sign Up
       </h1>
       <form className="flex flex-col gap-4" autoComplete="off">
         <input type="text" placeholder="username" className="border p-3 rounded-lg" id="username"/>
@@ -14,7 +14,7 @@ const Signin = () => {
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
-        <Link to={"/sign-up"}>
+        <Link to={"/sign-in"}>
           <span className="text-blue-700">Sign in</span>
         </Link>
       </div>
@@ -22,4 +22,4 @@ const Signin = () => {
   )
 }
 
-export default Signin
+export default SignUp
