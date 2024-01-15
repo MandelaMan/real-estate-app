@@ -6,7 +6,7 @@ import { signInStart, signInSuccess, signInFailure  } from '../redux/user/userSl
 
 const OAuth = () => {
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const dispatch = useDispatch()
 

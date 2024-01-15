@@ -55,7 +55,7 @@ const SignIn = () => {
   return (
     <div className="p-3 max-w-md mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">
-        Sign Up
+        Sign In
       </h1>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <form className="flex flex-col gap-4" autoComplete="off" onSubmit={handleSubmit}>
