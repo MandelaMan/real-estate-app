@@ -11,7 +11,12 @@ module.exports = {
       const isValidUser = await User.findOne({ email });
 
       if (!isValidUser) {
-        return next(errorHandler(404, "Invalid credentials"));
+        return next(
+          errorHandler(
+            404,
+            "Invalid credentials. Please check and try again..."
+          )
+        );
       }
 
       const validPassword = compareSync(
@@ -20,7 +25,12 @@ module.exports = {
       );
 
       if (!validPassword) {
-        return next(errorHandler(404, "Invalid credentials"));
+        return next(
+          errorHandler(
+            404,
+            "Invalid credentials. Please check and try again..."
+          )
+        );
       }
 
       const token = sign({ id: isValidUser._id }, process.env.JWT_SECRET, {

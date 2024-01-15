@@ -19,7 +19,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-   try{
+    try{
       setLoading(true)
 
       const res = await fetch('/api/auth/signup', {
@@ -42,12 +42,11 @@ const SignUp = () => {
       setError(null)
 
       navigate('/sign-in')
-  }
-  catch(err){     
-      setLoading(false)  
-      setError(err.message)
-  }
-
+    }
+    catch(err){     
+        setLoading(false)  
+        setError(err.message)
+    }
   }
 
   return (
@@ -61,13 +60,13 @@ const SignUp = () => {
         <input type="text" placeholder="email" className="border p-3 rounded-lg" id="email" onChange={handleChange}/>
         <input type="password" placeholder="password" className="border p-3 rounded-lg" id="password" onChange={handleChange}/>
         <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? 'Loading...' : 'Signup'}
+          {loading ? 'Loading...' : 'Sign up'}
         </button>
       </form>
       <div className="flex gap-2 mt-5">
-        <p>Dont have an account?</p>
-        <Link to={"/sign-up"}>
-          <span className="text-blue-700">Sign Up</span>
+        <p>Already have an account?</p>
+        <Link to={"/sign-in"}>
+          <span className="text-blue-700">Sign In</span>
         </Link>
       </div>
     </div>
