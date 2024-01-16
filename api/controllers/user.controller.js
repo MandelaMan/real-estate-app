@@ -2,6 +2,24 @@ const User = require("../models/user.model.js");
 const { errorHandler } = require("../utils/helperFunctions.js");
 
 module.exports = {
+  deleteUser: async (req, res, next) => {
+    if (req.user.id !== req.params.id) {
+      return next(errorHandler(403, "Forbidden"));
+    }
+
+    try {
+      await User.findByIdAndDelete(req.params.id);
+
+      res.clearCookie("access_token");
+
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+      });
+    } catch (err) {
+      next(errorHandler(500, "Failed to delete user"));
+    }
+  },
   updateUser: async (req, res, next) => {
     if (req.user.id !== req.params.id) {
       return next(errorHandler(403, "Forbidden"));

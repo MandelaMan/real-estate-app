@@ -43,8 +43,8 @@ const SignIn = () => {
         return;
       }
 
+      dispatch(signInSuccess(data))      
       setFormData({})
-      dispatch(signInSuccess(data))
       navigate('/')
     }
     catch(err){             

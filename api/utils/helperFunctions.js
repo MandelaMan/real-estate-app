@@ -16,8 +16,6 @@ module.exports = {
       return next(this.errorHandler(403, "Unauthorized"));
     }
 
-    const verification = verify(token, process.env.JWT_SECRET);
-
     verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) return next(this.errorHandler(403, "Unauthorized"));
 
