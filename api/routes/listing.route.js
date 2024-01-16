@@ -7,8 +7,6 @@ const router = express.Router();
 router.get("/test", test);
 
 // Added middleware verifyToken to check whether the token is valid
-// router.put("/create", verifyToken, createListing);
-
-router.post("/create", createListing);
+router.post("/create", verifyToken, createListing);
 
 module.exports = router;
