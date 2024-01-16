@@ -4,6 +4,16 @@ const { errorHandler } = require("../utils/helperFunctions.js");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
+  signOut: async (req, res, next) => {
+    try {
+      res.clearCookie("access_token");
+      res.status(200).json({
+        message: "User has been logged out",
+      });
+    } catch (err) {
+      next(errorHandler(500, "Internal server error"));
+    }
+  },
   logIn: async (req, res, next) => {
     const { email, password } = req.body;
 
