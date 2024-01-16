@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
+const listingRoutes = require("./routes/listing.route");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
@@ -27,6 +28,7 @@ app.listen(3000, () => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/listing", listingRoutes);
 
 //This is a middleware that allows us to catch all errors and report
 app.use((err, req, res, next) => {

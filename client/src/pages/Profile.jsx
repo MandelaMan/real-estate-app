@@ -41,13 +41,12 @@ const Profile = () => {
           setFileUploadPercentage(Math.round(progress))
         }, 
         (error) => {
+
           setFileErrorUpload(true)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {  
             
-            console.log(downloadURL)
-
             setFormData({
               ...formData,
             avatar: downloadURL
