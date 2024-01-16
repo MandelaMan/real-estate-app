@@ -1,6 +1,6 @@
 const User = require("../models/user.model.js");
 const { genSaltSync, hashSync, compareSync, compare } = require("bcrypt");
-const { errorHandler } = require("../utils/error.js");
+const { errorHandler } = require("../utils/helperFunctions.js");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {

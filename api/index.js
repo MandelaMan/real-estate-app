@@ -2,12 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 mongoose
   .connect(process.env.MONGO)
