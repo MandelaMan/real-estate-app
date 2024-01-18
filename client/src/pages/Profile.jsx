@@ -228,21 +228,25 @@ const Profile = () => {
       </div>
       <button onClick={getUserListings}className="text-green-700 w-full py-3">Show My Listings</button>
       {myListings && 
-       myListings.length > 0 && 
-       myListings.map((l,i) => 
-        <div className="flex justify-between items-center border rounded-lg p-3" key={i}>
-          <Link to={`/listing/${l._id}`}>
-            <img src={l.imageUrls[0]} alt="listing-image" className="h-16 w-16 object-contain" />              
-          </Link> 
-          <Link className="text-slate-700 font-semibold  hover:underline truncate" to={`/listing/${l._id}`}>
-            <p>{l.name}</p>            
-          </Link>  
-          <div className="flex flex-col items-center">
-            <button className="text-red-700 uppercase">Delete</button>
-            <button className="text-green-700 uppercase">Update</button>
-          </div>                      
-        </div>) 
-      }
+       myListings.length > 0 && (
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center mt-7 text-2xl">My Listings</h1>  
+          {myListings.map((l,i) =>
+           <div className="flex justify-between items-center border rounded-lg p-2" key={i}>
+              <Link to={`/listing/${l._id}`}>
+                <img src={l.imageUrls[0]} alt="listing-image" className="h-16 w-16 object-contain" />              
+              </Link>
+              <Link className="text-slate-700 font-semibold items-left hover:underline truncate" to={`/listing/${l._id}`}>
+                <p>{l.name}</p>            
+              </Link>
+              <div className="flex flex-col items-center">
+                <button className="text-red-700 uppercase">Delete</button>
+                <button className="text-green-700 uppercase">Update</button>
+              </div>
+           </div>
+          )}       
+        </div>
+       )}
     </div>
   )
 }

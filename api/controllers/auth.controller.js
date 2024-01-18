@@ -64,7 +64,7 @@ module.exports = {
 
       if (user) {
         const token = sign({ id: user._id }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
+          expiresIn: "5h",
         });
 
         // To return everything else and exclude password
