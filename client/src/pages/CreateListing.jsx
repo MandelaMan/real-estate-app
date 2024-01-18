@@ -1,18 +1,14 @@
 import { useState } from "react"
 import { getDownloadURL, getStorage, ref,uploadBytesResumable } from "firebase/storage";
 import {app} from '../firebase'
-import { useDispatch, useSelector } from "react-redux";
-import { createListingFailure, createListingStart, createListingSuccess } from "../redux/listing/listingSlice";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const CreateListing = () => {
 
-    const navigate = useNavigate()
-
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const {currentUser} = useSelector((state) => state.user)  
-  const {loading, error} = useSelector((state) => state.listing)  
 
   const [files, setFiles] = useState([]);
 
@@ -32,6 +28,10 @@ const CreateListing = () => {
     regularPrice: 50,
     offer: 0,
   })
+
+  //Create listing state
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   const [imageUploadError, setImageUploadError] = useState();
   
@@ -104,7 +104,7 @@ const CreateListing = () => {
     e.preventDefault()
 
     try{
-        dispatch(createListingStart())
+        setLoading(true)
 
         const res = await fetch('/api/listing/create', {
         method: 'POST',
@@ -120,14 +120,16 @@ const CreateListing = () => {
       const data = await res.json()
 
       if(data.success === false){   
-        dispatch(createListingFailure(data.message))
+        setError(true)
         return;
       }
-      dispatch(createListingSuccess(data)) 
+      setLoading(false)
+
       navigate(`/listing/${data.listing._id}`)
     }
     catch(err){
-        dispatch(createListingFailure())
+       setError(true)
+       setLoading(false)
     }   
   }
 

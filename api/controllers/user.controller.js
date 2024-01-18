@@ -1,7 +1,26 @@
 const User = require("../models/user.model.js");
+const Listing = require("../models/listing.model.js");
 const { errorHandler } = require("../utils/helperFunctions.js");
 
 module.exports = {
+  userListings: async (req, res, next) => {
+    if (req.user.id !== req.params.id) {
+      return next(errorHandler(403, "Forbidden"));
+    }
+
+    try {
+      const listings = await Listing.find({
+        userRef: req.params.id,
+      });
+
+      res.status(200).json({
+        success: true,
+        listings,
+      });
+    } catch (err) {
+      return next(errorHandler(403, err.message));
+    }
+  },
   deleteUser: async (req, res, next) => {
     if (req.user.id !== req.params.id) {
       return next(errorHandler(403, "Forbidden"));

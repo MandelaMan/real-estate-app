@@ -13,6 +13,11 @@ const Profile = () => {
   const [fileUploadPercentage, setFileUploadPercentage] = useState(0)
   const [fileErrorUpload, setFileErrorUpload] = useState(false)
 
+  // My Listing states
+  const [myListings, setMyListings] = useState([])
+  const [myListingsLoading, setMyListingLoading] = useState(false)
+  const [myListingsError, setMyListingsError] = useState(false)
+
   const fileRef = useRef(null)
   
   const {currentUser, loading , error} = useSelector((state) => state.user)  
@@ -45,6 +50,7 @@ const Profile = () => {
         (error) => {
 
           setFileErrorUpload(true)
+          console(error)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {  
@@ -150,6 +156,31 @@ const Profile = () => {
     }
   } 
 
+ const getUserListings = async () => {
+
+    try{
+      
+      setMyListingLoading(true);
+
+      const res = await fetch(`/api/user/listings/${currentUser._id}`, {
+        method: 'GET',
+      });
+
+      const data = await res.json()
+
+      if(data.success === false){ 
+        setMyListingsError(data.message)        
+        return;
+      }
+
+      setMyListings(data.listings)      
+      setMyListingLoading(false)
+    }
+    catch(err){
+      setMyListingsError(err) 
+      return;
+    }
+  }
   useEffect(() => {
     if(file){
       handleFileUpload(file);
@@ -169,7 +200,8 @@ const Profile = () => {
       <form className="flex flex-col gap-4" autoComplete="off" onSubmit={handleSubmit}>
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} accept="image/*" hidden/>
 
-        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt="" className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"/>
+        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt=""
+         className="rounded-full h-12 w-12 object-cover cursor-pointer self-center mt-2"/>
         <p className="text-sm self-center">
           {fileErrorUpload ? ( 
             <span className="text-red-700">Image is too large. Must be less that 2MB</span> 
@@ -189,12 +221,28 @@ const Profile = () => {
         <Link to="/create-listing" className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95">
           Create Listing
         </Link>
-      </form>
-     
+      </form>     
       <div className="flex justify-between mt-5">
         <span className="text-red-700 cursor-pointer" onClick={deleteUser}>Delete Account</span>
         <span className="text-red-700 cursor-pointer" onClick={signOutUser}>Sign Out</span>
       </div>
+      <button onClick={getUserListings}className="text-green-700 w-full py-3">Show My Listings</button>
+      {myListings && 
+       myListings.length > 0 && 
+       myListings.map((l,i) => 
+        <div className="flex justify-between items-center border rounded-lg p-3" key={i}>
+          <Link to={`/listing/${l._id}`}>
+            <img src={l.imageUrls[0]} alt="listing-image" className="h-16 w-16 object-contain" />              
+          </Link> 
+          <Link className="text-slate-700 font-semibold  hover:underline truncate" to={`/listing/${l._id}`}>
+            <p>{l.name}</p>            
+          </Link>  
+          <div className="flex flex-col items-center">
+            <button className="text-red-700 uppercase">Delete</button>
+            <button className="text-green-700 uppercase">Update</button>
+          </div>                      
+        </div>) 
+      }
     </div>
   )
 }
