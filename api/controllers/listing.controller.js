@@ -4,11 +4,14 @@ const { errorHandler } = require("../utils/helperFunctions.js");
 module.exports = {
   createListing: async (req, res, next) => {
     try {
-      const listing = Listing.create(req.body);
+      const listing = await Listing.create(req.body);
 
-      return res.status(201).json(listing);
+      return res.status(201).json({
+        success: true,
+        listing,
+      });
     } catch (err) {
-      next(err);
+      return next(errorHandler(500, err.message));
     }
   },
   test: (req, res) => {
