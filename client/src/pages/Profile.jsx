@@ -157,7 +157,6 @@ const Profile = () => {
   } 
 
  const getUserListings = async () => {
-
     try{
       
       setMyListingLoading(true);
@@ -181,6 +180,16 @@ const Profile = () => {
       return;
     }
   }
+
+  // const deleteListing = async (id) => {
+  //   try{
+  //     console.log(id)
+  //   }
+  //   catch(error){
+  //     console.log(error)
+  //   }
+  // }
+
   useEffect(() => {
     if(file){
       handleFileUpload(file);
@@ -241,7 +250,9 @@ const Profile = () => {
               </Link>
               <div className="flex flex-col items-center">
                 <button className="text-red-700 uppercase">Delete</button>
-                <button className="text-green-700 uppercase">Update</button>
+                <Link to={`/update-listing/${l._id}`}>                
+                  <button className="text-green-700 uppercase">Update</button>
+                </Link>
               </div>
            </div>
           )}       

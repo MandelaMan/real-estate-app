@@ -2,6 +2,18 @@ const Listing = require("../models/listing.model.js");
 const { errorHandler } = require("../utils/helperFunctions.js");
 
 module.exports = {
+  getListing: async (req, res, next) => {
+    try {
+      const listing = await Listing.findById(req.params.id);
+
+      return res.status(200).json({
+        success: true,
+        listing,
+      });
+    } catch (err) {
+      next(errorHandler(500, err.message));
+    }
+  },
   updateListing: async (req, res, next) => {
     const listing = await Listing.findById(req.params.id);
 
