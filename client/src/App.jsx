@@ -10,6 +10,7 @@ import SignIn from "./pages/Signin";
 import CreateListing from "./pages/CreateListing";
 import AllListings from "./pages/AllListings";
 import UpdateListing from "./pages/UpdateListing";
+import ShowListing from "./pages/ShowListing";
 
 const App = () => {
   return (
@@ -19,8 +20,9 @@ const App = () => {
       <Route path="/" element={<Home />}/>
       <Route path="/sign-up" element={<SignUp />}/>
       <Route path="/sign-in" element={<SignIn />}/>
-      <Route path="/signout" element={<SignOut />}/>
-      <Route path="/listings/:id" element={<AllListings />}/>
+      <Route path="/signout" element={<SignOut />}/>      
+      <Route path="/listing/:id" element={<ShowListing />}/>
+      <Route path="/listings" element={<AllListings />}/>
       <Route element={<PrivateRoute/>}>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/create-listing" element={<CreateListing />}/>

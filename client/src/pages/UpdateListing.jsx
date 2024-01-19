@@ -6,103 +6,103 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateListing = () => {
 
-  const params = useParams()
+    const params = useParams()
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const {currentUser} = useSelector((state) => state.user)  
+    const {currentUser} = useSelector((state) => state.user)  
 
-  const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState([]);
 
-  const [uploading, setUploading] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
-  const [formData, setFormData] = useState({
-    imageUrls : [],
-    name:"",
-    description: "",
-    address:"",
-    type: "rent",
-    parking: false,
-    furnished: false,
-    bedrooms: 1,
-    bathrooms: 1,
-    discountedPrice: 50,
-    regularPrice: 50,
-    offer: 0,
-  })
+    const [formData, setFormData] = useState({
+        imageUrls : [],
+        name:"",
+        description: "",
+        address:"",
+        type: "rent",
+        parking: false,
+        furnished: false,
+        bedrooms: 1,
+        bathrooms: 1,
+        discountedPrice: 50,
+        regularPrice: 50,
+        offer: 0,
+    })
 
-  //update listing state
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+    //update listing state
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
 
-  const [imageUploadError, setImageUploadError] = useState();
+    const [imageUploadError, setImageUploadError] = useState();
   
-  const handleImageSubmission = () => {
+    const handleImageSubmission = () => {
 
-    if(files.length > 0 && files.length < 7 + formData.imageUrls.length < 7){
+        if(files.length > 0 && files.length < 7 + formData.imageUrls.length < 7){
 
-        setUploading(true)
-        setImageUploadError(false)
+            setUploading(true)
+            setImageUploadError(false)
 
-        const promises = []
+            const promises = []
 
-        for(let i=0; i<files.length; i++){
-            promises.push(storeImage(files[i]));
-        }
+            for(let i=0; i<files.length; i++){
+                promises.push(storeImage(files[i]));
+            }
 
-        Promise.all(promises).then((urls)=>{
-            setFormData({...formData, imageUrls: formData.imageUrls.concat(urls) })
+            Promise.all(promises).then((urls)=>{
+                setFormData({...formData, imageUrls: formData.imageUrls.concat(urls) })
 
-            setImageUploadError(false);
+                setImageUploadError(false);
 
+                setUploading(false)
+
+                // setFiles([])
+            }).catch((error) =>{
+                setImageUploadError("Ensure all images are less than 2MB" + error);
+            })
+        }else{
+            setImageUploadError("You can only upload 6 images or less");
             setUploading(false)
-
-            // setFiles([])
-        }).catch((error) =>{
-            setImageUploadError("Ensure all images are less than 2MB" + error);
-        })
-    }else{
-        setImageUploadError("You can only upload 6 images or less");
-        setUploading(false)
-    }
-  }
-
-  const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app)
-
-      const fileName = new Date().getTime() + file.name
-
-      const storageRef = ref(storage, fileName)
-
-      const uploadTask = uploadBytesResumable(storageRef, file)
-
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-
-          console.log(progress)
-        }, 
-        (error) => {
-           reject(error)
-        },
-         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {           
-            resolve(downloadURL)
-          })
         }
-      );  
-    })
-  }
+    }
 
-  const removeImage = (index) => {
-    setFormData({
-        ...formData,
-        imageUrls: formData.imageUrls.filter((_, i) => i !== index )
-    })
-  }
+    const storeImage = async (file) => {
+        return new Promise((resolve, reject) => {
+            const storage = getStorage(app)
 
-  const updateListing= async (e) => {
+            const fileName = new Date().getTime() + file.name
+
+            const storageRef = ref(storage, fileName)
+
+            const uploadTask = uploadBytesResumable(storageRef, file)
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+
+                console.log(progress)
+                }, 
+                (error) => {
+                reject(error)
+                },
+                () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {           
+                    resolve(downloadURL)
+                })
+                }
+            );  
+        })
+    }
+
+    const removeImage = (index) => {
+        setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.filter((_, i) => i !== index )
+        })
+    }
+
+    const updateListing= async (e) => {
         e.preventDefault()
 
         try{
@@ -144,8 +144,6 @@ const UpdateListing = () => {
 
     const getListing = async (id) => {       
         try{
-
-            console.log(id)
             const res = await fetch(`/api/listing/${id}`, {
                 method: 'GET',
             });
@@ -187,7 +185,7 @@ const UpdateListing = () => {
             <input onChange={handleChange} 
             defaultValue={formData.name} type="text" placeholder="name" className="border p-3 rounded-lg" id="name" maxLength="30" required/>
             <textarea  onChange={handleChange} 
-            defaultValue={formData.description}  type="text" placeholder="description" className="border p-3 rounded-lg" id="description"  maxLength="30" required/>
+            defaultValue={formData.description}  type="text" placeholder="description" className="border p-3 rounded-lg" id="description" required/>
             <input onChange={handleChange} 
             defaultValue={formData.address}  type="text" placeholder="address" className="border p-3 rounded-lg" id="address" />
 
