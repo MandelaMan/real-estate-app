@@ -11,6 +11,7 @@ import CreateListing from "./pages/CreateListing";
 import AllListings from "./pages/AllListings";
 import UpdateListing from "./pages/UpdateListing";
 import ShowListing from "./pages/ShowListing";
+import SearchResults from "./pages/SearchResults";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/signout" element={<SignOut />}/>      
       <Route path="/listing/:id" element={<ShowListing />}/>
       <Route path="/listings" element={<AllListings />}/>
+      <Route path="/q" element={<SearchResults />}/>
       <Route element={<PrivateRoute/>}>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/create-listing" element={<CreateListing />}/>
