@@ -1,5 +1,4 @@
 import { useState ,useEffect} from "react"
-import { FaWindowClose } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ContactLandlord = ({listing, setContact}) => {

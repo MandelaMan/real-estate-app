@@ -144,7 +144,7 @@ const UpdateListing = () => {
 
     const getListing = async (id) => {       
         try{
-            const res = await fetch(`/api/listing/${id}`, {
+            const res = await fetch(`/api/listing/get/${id}`, {
                 method: 'GET',
             });
 

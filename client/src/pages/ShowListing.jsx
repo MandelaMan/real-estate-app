@@ -27,7 +27,7 @@ const ShowListing = () => {
         try{
             setLoading(true)
 
-            const res = await fetch(`/api/listing/${id}`, {
+            const res = await fetch(`/api/listing/get/${id}`, {
                 method: 'GET',
             });
 
