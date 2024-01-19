@@ -35,9 +35,9 @@ const OAuth = () => {
             });
 
             const data = await res.json()
-
+            
             if(data.success === false){    
-        
+                
                 dispatch(signInFailure(data.message))
                 return;
             }
